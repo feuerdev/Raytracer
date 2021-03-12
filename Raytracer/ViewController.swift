@@ -32,31 +32,24 @@ class ViewController: UIViewController {
         ]
 
         let lights = [
-//            Light(type: .ambient, intensity: 0.4),
+            Light(type: .ambient, intensity: 0.4),
             Light(type: .point, intensity: 1, position: .init(400, 200, -10)),
 //            Light(type: .directional, intensity: 0.2, direction: .init(1, 4, 4))
         ]
 
-        let scene = Scene(spheres: debugSpheres,
+        var scene = Scene(spheres: spheres,
                           lights: lights)
 
-        print(UIScreen.main.nativeBounds.width)
-        let quality:CGFloat = 0.1
-        let raytracer = Raytracer(
-            width: Int(UIScreen.main.nativeBounds.width*quality),
-            height: Int(UIScreen.main.nativeBounds.height*quality),
-            scene: scene,
-            background: .black,
-            rDepth: 2)
-
-        Timer.scheduledTimer(withTimeInterval: 1/24, repeats: false) { (timer) in
-            raytracer.scene.cameraPosition = Vector3(
-                raytracer.scene.cameraPosition.x,
-                raytracer.scene.cameraPosition.y,
-                raytracer.scene.cameraPosition.z+1)
-            self.view.layer.contents = raytracer.draw()
-        }
+//        let quality:CGFloat = 0.1
+        let raytracer = Raytracer()
         
+        Timer.scheduledTimer(withTimeInterval: 1/24, repeats: true) { (timer) in
+            scene.cameraPosition = Vector3(
+                scene.cameraPosition.x,
+                scene.cameraPosition.y,
+                scene.cameraPosition.z-0.1)
+            self.view.layer.contents = raytracer.draw(scene: scene, width: 400, height: 600)
+        }
     }
 }
 

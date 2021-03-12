@@ -10,6 +10,7 @@
 		0BE8603C34083D2910DE49D0 /* Pods_Raytracer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB94C51182567CF45FD6D66 /* Pods_Raytracer.framework */; };
 		1323373C88F7EDFEC728BCCE /* Pods_RaytracerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188D6AB7F7E0BA3A4E3C3103 /* Pods_RaytracerTests.framework */; };
 		2F363B8025FA19A0003BE50D /* MyPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */; };
+		2F363B8925FB57B1003BE50D /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F363B8825FB57B1003BE50D /* Configurator.swift */; };
 		2FF7311925EF742000D58844 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311825EF742000D58844 /* AppDelegate.swift */; };
 		2FF7311B25EF742000D58844 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311A25EF742000D58844 /* SceneDelegate.swift */; };
 		2FF7311D25EF742000D58844 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311C25EF742000D58844 /* ViewController.swift */; };
@@ -57,6 +58,7 @@
 		188D6AB7F7E0BA3A4E3C3103 /* Pods_RaytracerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaytracerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E672C28920F108E7ED0DD7B /* Pods_Raytracer_RaytracerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Raytracer_RaytracerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPresentationController.swift; sourceTree = "<group>"; };
+		2F363B8825FB57B1003BE50D /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		2FF7311525EF742000D58844 /* Raytracer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raytracer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF7311825EF742000D58844 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2FF7311A25EF742000D58844 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				2FF7312325EF742000D58844 /* LaunchScreen.storyboard */,
 				2FF7312625EF742000D58844 /* Info.plist */,
 				2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */,
+				2F363B8825FB57B1003BE50D /* Configurator.swift */,
 			);
 			path = Raytracer;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				2FF7311D25EF742000D58844 /* ViewController.swift in Sources */,
 				2FF7311925EF742000D58844 /* AppDelegate.swift in Sources */,
 				2FF7311B25EF742000D58844 /* SceneDelegate.swift in Sources */,
+				2F363B8925FB57B1003BE50D /* Configurator.swift in Sources */,
 				2F363B8025FA19A0003BE50D /* MyPresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,7 +494,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -545,7 +549,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
