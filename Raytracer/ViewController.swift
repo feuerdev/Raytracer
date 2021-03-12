@@ -60,5 +60,12 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return MyPresentationController(presentedViewController: presented, presentingViewController: presenting, height: self.view.frame.height/2)
+        
+    }
+    
 }
 
