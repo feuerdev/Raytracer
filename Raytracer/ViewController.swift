@@ -41,7 +41,7 @@ class ViewController: UIViewController {
                           lights: lights)
 
 //        let quality:CGFloat = 0.1
-        let raytracer = Raytracer()
+        var raytracer = Raytracer()
         
         Timer.scheduledTimer(withTimeInterval: 1/24, repeats: true) { (timer) in
             scene.cameraPosition = Vector3(

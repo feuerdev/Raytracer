@@ -30,15 +30,147 @@ class Configurator:UIViewController {
     var roll:Float = 0
     var yaw:Float = 0
     
+    var width = 0
+    var height = 0
+    
+    var fastTracer = Raytracer()
+    var betterTracer = Raytracer()
+    var bestTracer = Raytracer()
+    
+    let fastQueue = DispatchQueue(label: "fast", qos: .userInteractive)
+    let slowQueue = DispatchQueue(label: "slow", qos: .userInitiated)
+    let slowestQueue = DispatchQueue(label: "slowest", qos: .userInitiated)
+    
+    var x0 = 0
+    var x1 = 0
+    var a0 = 0
+    var a1 = 0
+    var b0 = 0
+    var b1 = 0
+    
+    let betterQueue = OperationQueue()
+    
+    
+    private func redraw() {
+//        fastTracer.cancelled = true
+        betterTracer.cancelled = true
+        bestTracer.cancelled = true
+        fastQueue.async {
+//            self.fastTracer.cancelled = false
+            self.x0 += 1
+            self.slowQueue.async {
+                self.a0 += 1
+                self.betterTracer.cancelled = false
+                if let betterImg = self.betterTracer.draw(scene: self.scene, width: 300, height: 300) {
+                    DispatchQueue.main.async {
+                        self.a1 += 1
+                        self.ivImage.layer.contents = betterImg
+                        print(self.x0, self.x1, " - ",self.a0, self.a1, " - ", self.b0, self.b1)
+                    }
+                    self.slowestQueue.async {
+                        self.b0 += 1
+                        self.bestTracer.cancelled = false
+                        if let bestImg = self.bestTracer.draw(scene: self.scene, width: self.width, height: self.height) {
+                            DispatchQueue.main.async {
+                                self.b1 += 1
+                                self.ivImage.layer.contents = bestImg
+                                print(self.x0, self.x1, " - ",self.a0, self.a1, " - ", self.b0, self.b1)
+                            }
+                        }
+                    }
+                }
+            }
+            if let fastImg = self.fastTracer.draw(scene: self.scene, width: 50, height: 50) {
+                DispatchQueue.main.async {
+                    self.x1 += 1
+                    self.ivImage.layer.contents = fastImg
+                    print(self.x0, self.x1, " - ",self.a0, self.a1, " - ", self.b0, self.b1)
+                }
+            }
+//                DispatchQueue.global().async {
+//                    let opBetter:BlockOperation =  {
+//                        let op = BlockOperation()
+//                        op.addExecutionBlock {
+//                            guard !op.isCancelled else {
+//                                return
+//                            }
+//
+//                            guard let img = self.betterTracer.draw(scene: self.scene, width: 300, height: 300) else {
+//                                return
+//                            }
+//                            DispatchQueue.main.async {
+//                                self.ivImage.layer.contents = img
+//                            }
+//                        }
+//                        return op
+//                    }()
+//                    self.betterQueue.maxConcurrentOperationCount = 1
+//                    self.betterQueue.cancelAllOperations()
+//                    self.betterQueue.addOperation(opBetter)
+//                    self.betterQueue.waitUntilAllOperationsAreFinished()
+//                }
+                
+                
+                
+ 
+            
+            
+            
+//            self.betterTracer.cancelled = false
+            
+//            self.bestTracer.cancelled = false
+//            let bestImg = self.bestTracer.draw(scene: self.scene, width: self.width, height: self.height)
+//            DispatchQueue.main.async {
+//                self.ivImage.layer.contents = bestImg
+//            }
+        }
+        
+        
+//
+//        drawQueue.cancelAllOperations()
+//        let fast = BlockOperation()
+//        fast.addExecutionBlock {
+//            let img = Raytracer().draw(scene: self.scene, width: 50, height: 50)
+//
+//
+//
+//        }
+//        let better = BlockOperation()
+//        better.addExecutionBlock {
+//            if !better.isCancelled {
+//                let img = self.raytracer.draw(scene: self.scene, width: 300, height: 300)
+////                if !better.isCancelled {
+////                    DispatchQueue.main.async {
+////                        self.ivImage.layer.contents = img
+////                    }
+////                }
+//            }
+//        }
+//        let best = BlockOperation()
+//        best.addExecutionBlock {
+//            print("best")
+//            let img = self.raytracer.draw(scene: self.scene, width: self.width, height: self.height)
+//            if !best.isCancelled {
+//                DispatchQueue.main.async {
+//                    print("block1")
+//                    self.ivImage.layer.contents = img
+//                }
+//            }
+//        }
+//        best.addDependency(better)
+//        better.addDependency(fast)
+//        self.drawQueue.addOperations([fast, better], waitUntilFinished: true)
+//
+    }
+    
     @objc private func didRotate(_ sender: UIRotationGestureRecognizer) {
-//        print(sender.rotation)
-//        print(sender.velocity)
         yaw += Float(sender.velocity/20)
         let mtx = rotate(pitch: pitch, roll: roll, yaw: yaw)
         
+        print(self.scene.hashValue)
         scene.cameraRotation = mtx
-        let img = raytracer.draw(scene: scene, width: 50 ?? Int(ivImage.frame.width), height: 50 ?? Int(ivImage.frame.height))
-        ivImage.image = UIImage(cgImage: img!)
+        print(self.scene.hashValue)
+        redraw()
     }
     @objc private func didPinch(_ sender: UIPinchGestureRecognizer) {
         print(sender.velocity)
@@ -49,8 +181,7 @@ class Configurator:UIViewController {
         
         
         
-        let img = raytracer.draw(scene: scene, width: 50 ?? Int(ivImage.frame.width), height: 50 ?? Int(ivImage.frame.height))
-        ivImage.image = UIImage(cgImage: img!)
+        redraw()
     }
 
     
@@ -75,38 +206,30 @@ class Configurator:UIViewController {
         }
         
         
-        
-        
-        let img = raytracer.draw(scene: scene, width: 50 ?? Int(ivImage.frame.width), height: 50 ?? Int(ivImage.frame.height))
-        ivImage.image = UIImage(cgImage: img!)
+        redraw()
     }
     
     func rotate(pitch:Float, roll:Float, yaw:Float)->[[Float]] {
-        let cosa = cos(yaw);
-        let sina = sin(yaw);
+        let cosa = cos(yaw)
+        let sina = sin(yaw)
 
-        let cosb = cos(pitch);
-        let sinb = sin(pitch);
+        let cosb = cos(pitch)
+        let sinb = sin(pitch)
 
-        let cosc = cos(roll);
-        let sinc = sin(roll);
+        let cosc = cos(roll)
+        let sinc = sin(roll)
 
-        let Axx = cosa*cosb;
-        let Axy = cosa*sinb*sinc - sina*cosc;
-        let Axz = cosa*sinb*cosc + sina*sinc;
+        let Axx = cosa*cosb
+        let Axy = cosa*sinb*sinc - sina*cosc
+        let Axz = cosa*sinb*cosc + sina*sinc
 
-        let Ayx = sina*cosb;
-        let Ayy = sina*sinb*sinc + cosa*cosc;
-        let Ayz = sina*sinb*cosc - cosa*sinc;
+        let Ayx = sina*cosb
+        let Ayy = sina*sinb*sinc + cosa*cosc
+        let Ayz = sina*sinb*cosc - cosa*sinc
 
-        let Azx = -sinb;
-        let Azy = cosb*sinc;
-        let Azz = cosb*cosc;
-//        let mtx = [
-//            [Axx, Ayx, Azx],
-//            [Axy, Ayy, Azy],
-//            [Axz, Ayz, Azz]
-//        ]
+        let Azx = -sinb
+        let Azy = cosb*sinc
+        let Azz = cosb*cosc
         
         let mtx = [
             [Axx, Axy, Axz],
@@ -117,8 +240,7 @@ class Configurator:UIViewController {
     }
     
     override func viewDidLoad() {
-        
-        scene = Scene(spheres: spheres, lights: lights, cameraPosition: .init(0, 0, -10))
+        self.scene = Scene.testScene
         
         view.addSubview(ivImage)
         view.addSubview(tvConfiguration)
@@ -151,9 +273,9 @@ class Configurator:UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        let img = raytracer.draw(scene: scene, width: Int(ivImage.frame.width), height: Int(ivImage.frame.height))
-        ivImage.image = UIImage(cgImage: img!)
+        self.width = Int(ivImage.frame.width*UIScreen.main.scale)
+        self.height = Int(ivImage.frame.height*UIScreen.main.scale)
+        redraw()
     }
     
 }
