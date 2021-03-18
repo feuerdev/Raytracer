@@ -33,134 +33,54 @@ class Configurator:UIViewController {
     var width = 0
     var height = 0
     
-    var fastTracer = Raytracer()
-    var betterTracer = Raytracer()
-    var bestTracer = Raytracer()
-    
     let fastQueue = DispatchQueue(label: "fast", qos: .userInteractive)
-    let slowQueue = DispatchQueue(label: "slow", qos: .userInitiated)
-    let slowestQueue = DispatchQueue(label: "slowest", qos: .userInitiated)
-    
-    var x0 = 0
-    var x1 = 0
-    var a0 = 0
-    var a1 = 0
-    var b0 = 0
-    var b1 = 0
-    
-    let betterQueue = OperationQueue()
-    
+    let slowQueue = DispatchQueue(label: "better", qos: .userInitiated)
+    let slowestQueue = DispatchQueue(label: "best", qos: .userInitiated)
+    var slowTracers = [Raytracer]()
+    var slowestTracers = [Raytracer]()
     
     private func redraw() {
-//        fastTracer.cancelled = true
-        betterTracer.cancelled = true
-        bestTracer.cancelled = true
         fastQueue.async {
-//            self.fastTracer.cancelled = false
-            self.x0 += 1
-            self.slowQueue.async {
-                self.a0 += 1
-                self.betterTracer.cancelled = false
-                if let betterImg = self.betterTracer.draw(scene: self.scene, width: 300, height: 300) {
-                    DispatchQueue.main.async {
-                        self.a1 += 1
-                        self.ivImage.layer.contents = betterImg
-                        print(self.x0, self.x1, " - ",self.a0, self.a1, " - ", self.b0, self.b1)
+            self.slowTracers.forEach {
+                $0.cancelled = true
+            }
+            let fastTracer = Raytracer()
+            fastTracer.draw(scene: self.scene, width: 50, height: 50) { img, hash  in
+                guard let img = img else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.ivImage.layer.contents = img
+                }
+                self.slowQueue.async {
+                    self.slowestTracers.forEach {
+                        $0.cancelled = true
                     }
-                    self.slowestQueue.async {
-                        self.b0 += 1
-                        self.bestTracer.cancelled = false
-                        if let bestImg = self.bestTracer.draw(scene: self.scene, width: self.width, height: self.height) {
-                            DispatchQueue.main.async {
-                                self.b1 += 1
-                                self.ivImage.layer.contents = bestImg
-                                print(self.x0, self.x1, " - ",self.a0, self.a1, " - ", self.b0, self.b1)
+                    let slowTracer = Raytracer()
+                    self.slowTracers = [slowTracer]
+                    slowTracer.draw(scene: self.scene, width: 100, height: 100) { img, hash in
+                        guard let img = img else {
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.ivImage.layer.contents = img
+                        }
+                        self.slowestQueue.async {
+                            let slowestTracer = Raytracer()
+                            self.slowestTracers = [slowestTracer]
+                            slowestTracer.draw(scene: self.scene, width: 200, height: 200) { img, hash in
+                                guard let img = img else {
+                                    return
+                                }
+                                DispatchQueue.main.async {
+                                    self.ivImage.layer.contents = img
+                                }
                             }
                         }
                     }
                 }
             }
-            if let fastImg = self.fastTracer.draw(scene: self.scene, width: 50, height: 50) {
-                DispatchQueue.main.async {
-                    self.x1 += 1
-                    self.ivImage.layer.contents = fastImg
-                    print(self.x0, self.x1, " - ",self.a0, self.a1, " - ", self.b0, self.b1)
-                }
-            }
-//                DispatchQueue.global().async {
-//                    let opBetter:BlockOperation =  {
-//                        let op = BlockOperation()
-//                        op.addExecutionBlock {
-//                            guard !op.isCancelled else {
-//                                return
-//                            }
-//
-//                            guard let img = self.betterTracer.draw(scene: self.scene, width: 300, height: 300) else {
-//                                return
-//                            }
-//                            DispatchQueue.main.async {
-//                                self.ivImage.layer.contents = img
-//                            }
-//                        }
-//                        return op
-//                    }()
-//                    self.betterQueue.maxConcurrentOperationCount = 1
-//                    self.betterQueue.cancelAllOperations()
-//                    self.betterQueue.addOperation(opBetter)
-//                    self.betterQueue.waitUntilAllOperationsAreFinished()
-//                }
-                
-                
-                
- 
-            
-            
-            
-//            self.betterTracer.cancelled = false
-            
-//            self.bestTracer.cancelled = false
-//            let bestImg = self.bestTracer.draw(scene: self.scene, width: self.width, height: self.height)
-//            DispatchQueue.main.async {
-//                self.ivImage.layer.contents = bestImg
-//            }
         }
-        
-        
-//
-//        drawQueue.cancelAllOperations()
-//        let fast = BlockOperation()
-//        fast.addExecutionBlock {
-//            let img = Raytracer().draw(scene: self.scene, width: 50, height: 50)
-//
-//
-//
-//        }
-//        let better = BlockOperation()
-//        better.addExecutionBlock {
-//            if !better.isCancelled {
-//                let img = self.raytracer.draw(scene: self.scene, width: 300, height: 300)
-////                if !better.isCancelled {
-////                    DispatchQueue.main.async {
-////                        self.ivImage.layer.contents = img
-////                    }
-////                }
-//            }
-//        }
-//        let best = BlockOperation()
-//        best.addExecutionBlock {
-//            print("best")
-//            let img = self.raytracer.draw(scene: self.scene, width: self.width, height: self.height)
-//            if !best.isCancelled {
-//                DispatchQueue.main.async {
-//                    print("block1")
-//                    self.ivImage.layer.contents = img
-//                }
-//            }
-//        }
-//        best.addDependency(better)
-//        better.addDependency(fast)
-//        self.drawQueue.addOperations([fast, better], waitUntilFinished: true)
-//
     }
     
     @objc private func didRotate(_ sender: UIRotationGestureRecognizer) {
@@ -172,40 +92,27 @@ class Configurator:UIViewController {
         print(self.scene.hashValue)
         redraw()
     }
+    
     @objc private func didPinch(_ sender: UIPinchGestureRecognizer) {
         print(sender.velocity)
         let vector = .init(0, 0, Float(sender.velocity)) * scene.cameraRotation
         scene.cameraPosition = scene.cameraPosition + vector
-        
-//        scene.cameraPosition = .init(scene.cameraPosition.x, scene.cameraPosition.y, scene.cameraPosition.z+Float(sender.velocity))
-        
-        
-        
         redraw()
     }
-
     
     @objc private func didPan(_ sender: UIPanGestureRecognizer) {
-//        print("panned")
-//        print(sender.velocity(in: ivImage))
-//        print(sender.numberOfTouches)
-        
         let x = sender.velocity(in: ivImage).x
         let y = sender.velocity(in: ivImage).y
         
         if sender.numberOfTouches == 1 {
             pitch -= Float(x/5000)
             roll -= Float(y/5000)
-//            print(Float(x/1000000))
             let mtx = rotate(pitch: pitch, roll: roll, yaw: yaw)
-    //        let new = Vector3.add(mtx, scene.cameraRotation)
             scene.cameraRotation = mtx
         } else {
             let vector = .init(Float(x/1000), Float(y/1000), 0) * scene.cameraRotation
             scene.cameraPosition = scene.cameraPosition + vector
         }
-        
-        
         redraw()
     }
     
@@ -268,8 +175,6 @@ class Configurator:UIViewController {
         ivImage.addGestureRecognizer(a)
         ivImage.addGestureRecognizer(b)
         ivImage.addGestureRecognizer(c)
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
