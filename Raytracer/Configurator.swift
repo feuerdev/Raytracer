@@ -41,37 +41,24 @@ class Configurator:UIViewController {
     
     private func redraw() {
         fastQueue.async {
-            self.slowTracers.forEach {
-                $0.cancelled = true
-            }
+            self.slowTracers.forEach { $0.cancel() }
+            self.slowestTracers.forEach { $0.cancel() }
             let fastTracer = Raytracer()
-            fastTracer.draw(scene: self.scene, width: 50, height: 50) { img, hash  in
-                guard let img = img else {
-                    return
-                }
+            fastTracer.draw(scene: self.scene, width: 50, height: 50) { img in
                 DispatchQueue.main.async {
                     self.ivImage.layer.contents = img
                 }
                 self.slowQueue.async {
-                    self.slowestTracers.forEach {
-                        $0.cancelled = true
-                    }
                     let slowTracer = Raytracer()
                     self.slowTracers = [slowTracer]
-                    slowTracer.draw(scene: self.scene, width: 100, height: 100) { img, hash in
-                        guard let img = img else {
-                            return
-                        }
+                    slowTracer.draw(scene: self.scene, width: 100, height: 100) { img in
                         DispatchQueue.main.async {
                             self.ivImage.layer.contents = img
                         }
                         self.slowestQueue.async {
                             let slowestTracer = Raytracer()
                             self.slowestTracers = [slowestTracer]
-                            slowestTracer.draw(scene: self.scene, width: 200, height: 200) { img, hash in
-                                guard let img = img else {
-                                    return
-                                }
+                            slowestTracer.draw(scene: self.scene, width: 500, height: 500) { img in
                                 DispatchQueue.main.async {
                                     self.ivImage.layer.contents = img
                                 }
@@ -86,15 +73,11 @@ class Configurator:UIViewController {
     @objc private func didRotate(_ sender: UIRotationGestureRecognizer) {
         yaw += Float(sender.velocity/20)
         let mtx = rotate(pitch: pitch, roll: roll, yaw: yaw)
-        
-        print(self.scene.hashValue)
         scene.cameraRotation = mtx
-        print(self.scene.hashValue)
         redraw()
     }
     
     @objc private func didPinch(_ sender: UIPinchGestureRecognizer) {
-        print(sender.velocity)
         let vector = .init(0, 0, Float(sender.velocity)) * scene.cameraRotation
         scene.cameraPosition = scene.cameraPosition + vector
         redraw()
