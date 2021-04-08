@@ -22,11 +22,11 @@ private enum SceneSettings:Int, CaseIterable {
     case backgroundcolor, reflections, quality
 }
 
-class SceneDataSource: NSObject {
+class ConfiguratorDatasource: NSObject {
     var scene: Scene = Scene.testScene
 }
 
-extension SceneDataSource: UITableViewDataSource {
+extension ConfiguratorDatasource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let section = SceneSections(rawValue: section)
         switch section {
@@ -49,13 +49,11 @@ extension SceneDataSource: UITableViewDataSource {
         let section = SceneSections(rawValue: indexPath.section)
         switch section {
         case .spheres:
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifierSpheres, for: indexPath) as! SettingSphereCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifierSpheres, for: indexPath) as! ConfigureSphereCell
             guard let sphere = scene.spheres[safe: indexPath.row] else {
                 return cell
             }
-            
-            cell.textLabel?.text = String(sphere.center.x)
-            //cell.sphere = sphere
+            cell.setup(with: sphere)
             return cell
         case .lights:
             return UITableViewCell()
@@ -67,7 +65,8 @@ extension SceneDataSource: UITableViewDataSource {
     }
 }
 
-extension SceneDataSource: UITableViewDelegate {
+
+extension ConfiguratorDatasource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = SceneSections(rawValue: indexPath.section)

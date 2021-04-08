@@ -21,6 +21,7 @@ class Configurator:UIViewController {
         tv.delegate = dataSource
         tv.dataSource = dataSource
         tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.register(ConfigureSphereCell.self, forCellReuseIdentifier: identifierSpheres)
         return tv
     }()
     
@@ -46,7 +47,7 @@ class Configurator:UIViewController {
         ]
     }()
     
-    private var dataSource = SceneDataSource()
+    private var dataSource = ConfiguratorDatasource()
     
     override func viewDidLoad() {
         view.addSubview(rvRay)
