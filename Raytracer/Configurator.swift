@@ -20,92 +20,80 @@ class Configurator:UIViewController {
         let tv = UITableView()
         tv.delegate = dataSource
         tv.dataSource = dataSource
+        tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
     
-    private var dataSource = SceneDataSource()
+    private lazy var landscapeConstraints:[NSLayoutConstraint] = {
+        return [
+            rvRay.topAnchor.constraint(equalTo: view.topAnchor),
+            rvRay.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            rvRay.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            rvRay.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+    }()
     
-    var scene:Scene!
+    private lazy var portraitConstraints:[NSLayoutConstraint] = {
+        return [
+            rvRay.topAnchor.constraint(equalTo: view.topAnchor),
+            rvRay.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            rvRay.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            rvRay.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            tvConfiguration.topAnchor.constraint(equalTo: rvRay.bottomAnchor),
+            tvConfiguration.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tvConfiguration.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tvConfiguration.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ]
+    }()
     
     var pitch:Float = 0
     var roll:Float = 0
     var yaw:Float = 0
     
-    var width = 0
-    var height = 0
+    override func viewDidLoad() {
+        view.addSubview(rvRay)
+        view.addSubview(tvConfiguration)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        guard let orientation = self.view.window?.windowScene?.interfaceOrientation.isLandscape else {
+            return
+        }
+        
+        if orientation {
+            setupLandscapeConstraints()
+        } else {
+            setupPortraitConstraints()
+        }
+    }
     
-    let fastQueue = DispatchQueue(label: "fast", qos: .userInteractive)
-    let slowQueue = DispatchQueue(label: "better", qos: .userInitiated)
-    let slowestQueue = DispatchQueue(label: "best", qos: .userInitiated)
-    var slowTracers = [Raytracer]()
-    var slowestTracers = [Raytracer]()
-    
-    private func redraw() {
-        fastQueue.async {
-            self.slowTracers.forEach { $0.cancel() }
-            self.slowestTracers.forEach { $0.cancel() }
-            let fastTracer = Raytracer()
-            fastTracer.draw(scene: self.scene, width: 50, height: 50) { img in
-                DispatchQueue.main.async {
-                    self.ivImage.layer.contents = img
-                }
-                self.slowQueue.async {
-                    let slowTracer = Raytracer()
-                    self.slowTracers = [slowTracer]
-                    slowTracer.draw(scene: self.scene, width: 100, height: 100) { img in
-                        DispatchQueue.main.async {
-                            self.ivImage.layer.contents = img
-                        }
-                        self.slowestQueue.async {
-                            let slowestTracer = Raytracer()
-                            self.slowestTracers = [slowestTracer]
-                            slowestTracer.draw(scene: self.scene, width: 500, height: 500) { img in
-                                DispatchQueue.main.async {
-                                    self.ivImage.layer.contents = img
-                                }
-                            }
-                        }
-                    }
-                }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate { [weak self] context in
+            if UIApplication.shared.statusBarOrientation.isLandscape {
+                self?.setupLandscapeConstraints()
+            } else {
+                self?.setupPortraitConstraints()
+            }
+            // 3. If you want the change to be smoothly animated call this block here
+            UIView.animate(withDuration: context.transitionDuration) {
+                self?.view.layoutIfNeeded()
             }
         }
+        super.viewWillTransition(to: size, with: coordinator)
     }
     
-    @objc private func didRotate(_ sender: UIRotationGestureRecognizer) {
-        yaw += Float(sender.velocity/20)
-        let mtx = rotate(pitch: pitch, roll: roll, yaw: yaw)
-        scene.cameraRotation = mtx
-        redraw()
+    private func setupLandscapeConstraints() {
+        NSLayoutConstraint.deactivate(portraitConstraints)
+        NSLayoutConstraint.activate(landscapeConstraints)
     }
     
-    @objc private func didPinch(_ sender: UIPinchGestureRecognizer) {
-        let vector = .init(0, 0, Float(sender.velocity)) * scene.cameraRotation
-        scene.cameraPosition = scene.cameraPosition + vector
-        redraw()
+    private func setupPortraitConstraints() {
+        NSLayoutConstraint.deactivate(landscapeConstraints)
+        NSLayoutConstraint.activate(portraitConstraints)
     }
-    
-    @objc private func didPan(_ sender: UIPanGestureRecognizer) {
-        let x = sender.velocity(in: ivImage).x
-        let y = sender.velocity(in: ivImage).y
-        
-        if sender.numberOfTouches == 1 {
-            pitch -= Float(x/5000)
-            roll -= Float(y/5000)
-            let mtx = rotate(pitch: pitch, roll: roll, yaw: yaw)
-            scene.cameraRotation = mtx
-        } else {
-            let vector = .init(Float(x/1000), Float(y/1000), 0) * scene.cameraRotation
-            scene.cameraPosition = scene.cameraPosition + vector
-        }
-        redraw()
-    }
-    
-    func rotate(pitch:Float, roll:Float, yaw:Float)->[[Float]] {
-        let cosa = cos(yaw)
-        let sina = sin(yaw)
+}
 
-        let cosb = cos(pitch)
-        let sinb = sin(pitch)
+
 
         let cosc = cos(roll)
         let sinc = sin(roll)
