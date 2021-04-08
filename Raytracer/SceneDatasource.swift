@@ -8,6 +8,12 @@
 import UIKit
 import Feuerlib
 
+let identifierSpheres = "spheres"
+let identifierLights = "lights"
+let identifierBackgroundColor = "background"
+let identifierReflections = "reflections"
+let identifierQuality = "quality"
+
 private enum SceneSections:Int {
     case spheres, lights, settings
 }
@@ -27,7 +33,7 @@ extension SceneDataSource: UITableViewDataSource {
         case .spheres:
             return scene.spheres.count
         case .lights:
-            return scene.spheres.count
+            return scene.lights.count
         case .settings:
             return SceneSettings.allCases.count
         default:
@@ -35,20 +41,29 @@ extension SceneDataSource: UITableViewDataSource {
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-        
-//        let section = SceneSections(rawValue: indexPath.section)
-//        switch section {
-//        case .spheres:
-//            return scene.spheres.count
-//        case .lights:
-//            return scene.spheres.count
-//        case .settings:
-//            return SceneSettings.allCases.count
-//        default:
-//            return 0
-//        }
+        let section = SceneSections(rawValue: indexPath.section)
+        switch section {
+        case .spheres:
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifierSpheres, for: indexPath) as! SettingSphereCell
+            guard let sphere = scene.spheres[safe: indexPath.row] else {
+                return cell
+            }
+            
+            cell.textLabel?.text = String(sphere.center.x)
+            //cell.sphere = sphere
+            return cell
+        case .lights:
+            return UITableViewCell()
+        case .settings:
+            return UITableViewCell()
+        default:
+            return UITableViewCell()
+        }
     }
 }
 

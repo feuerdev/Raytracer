@@ -46,9 +46,7 @@ class Configurator:UIViewController {
         ]
     }()
     
-    var pitch:Float = 0
-    var roll:Float = 0
-    var yaw:Float = 0
+    private var dataSource = SceneDataSource()
     
     override func viewDidLoad() {
         view.addSubview(rvRay)
