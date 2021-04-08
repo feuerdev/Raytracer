@@ -92,66 +92,30 @@ class Configurator:UIViewController {
 }
 
 
+//extension ViewController: UIViewControllerTransitioningDelegate {
+//    
+//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+//        return MyPresentationController(presentedViewController: presented, presentingViewController: presenting, height: self.view.frame.height/2)
+//        
+//    }
+//    
+//}
 
-        let cosc = cos(roll)
-        let sinc = sin(roll)
 
-        let Axx = cosa*cosb
-        let Axy = cosa*sinb*sinc - sina*cosc
-        let Axz = cosa*sinb*cosc + sina*sinc
 
-        let Ayx = sina*cosb
-        let Ayy = sina*sinb*sinc + cosa*cosc
-        let Ayz = sina*sinb*cosc - cosa*sinc
 
-        let Azx = -sinb
-        let Azy = cosb*sinc
-        let Azz = cosb*cosc
-        
-        let mtx = [
-            [Axx, Axy, Axz],
-            [Ayx, Ayy, Ayz],
-            [Azx, Azy, Azz]
-        ]
-        return mtx
-    }
-    
-    override func viewDidLoad() {
-        self.scene = Scene.testScene
-        
-        view.addSubview(ivImage)
-        view.addSubview(tvConfiguration)
-        tvConfiguration.translatesAutoresizingMaskIntoConstraints = false
-        ivImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            ivImage.topAnchor.constraint(equalTo: view.topAnchor),
-            ivImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            ivImage.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            ivImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5)
-        ])
-        
-        NSLayoutConstraint.activate([
-            tvConfiguration.topAnchor.constraint(equalTo: ivImage.bottomAnchor),
-            tvConfiguration.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tvConfiguration.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tvConfiguration.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        ])
-        let a = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
-        let b = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(_:)))
-        let c = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(_:)))
-
-        ivImage.isUserInteractionEnabled = true
-        ivImage.addGestureRecognizer(a)
-        ivImage.addGestureRecognizer(b)
-        ivImage.addGestureRecognizer(c)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.width = Int(ivImage.frame.width*UIScreen.main.scale)
-        self.height = Int(ivImage.frame.height*UIScreen.main.scale)
-        redraw()
-    }
-    
-}
+//extension Configurator: UITableViewDelegate {
+//
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let vc = UIViewController()
+//        vc.view.backgroundColor = .systemOrange
+//        vc.modalPresentationStyle = .pageSheet
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            vc.dismiss(animated: true, completion: nil)
+//        }
+//        present(vc, animated: true, completion: nil)
+//    }
+//}
 
