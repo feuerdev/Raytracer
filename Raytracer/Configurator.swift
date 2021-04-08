@@ -10,9 +10,10 @@ import Feuerlib
 
 class Configurator:UIViewController {
     
-    private lazy var ivImage:UIImageView = {
-        let iv = UIImageView()
-        return iv
+    private lazy var rvRay:UIRaytracerView = {
+        let rv = UIRaytracerView()
+        rv.translatesAutoresizingMaskIntoConstraints = false
+        return rv
     }()
     
     private lazy var tvConfiguration:UITableView = {
