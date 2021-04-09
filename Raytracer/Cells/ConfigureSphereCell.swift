@@ -21,11 +21,13 @@ class ConfigureSphereCell: UITableViewCell {
     func setup(with sphere:Sphere) {
         //Labels
         self.textLabel?.text = sphere.name
-        self.detailTextLabel?.text = "Center:\(sphere.center.x), \(sphere.center.y), \(sphere.center.z) Radius: \(sphere.radius)"
+        self.detailTextLabel?.text = "(\(sphere.center.x), \(sphere.center.y), \(sphere.center.z))"
         
         //Color
         let height = 40
+        let img = sphere.color.toUIColor().image(size: .init(width: height, height: height))
         self.imageView?.image = sphere.color.toUIColor().image(size: .init(width: height, height: height))
+        
         self.imageView?.layer.borderColor = UIColor.black.cgColor
         self.imageView?.layer.borderWidth = 1
     }

@@ -15,6 +15,9 @@
 		2F8C0678261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */; };
 		2F8C0679261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */; };
 		2F8C067A261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */; };
+		2F8C0687261F02C2008D5895 /* ConfigureLightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0686261F02C2008D5895 /* ConfigureLightCell.swift */; };
+		2F8C0688261F02C2008D5895 /* ConfigureLightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0686261F02C2008D5895 /* ConfigureLightCell.swift */; };
+		2F8C0689261F02C2008D5895 /* ConfigureLightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0686261F02C2008D5895 /* ConfigureLightCell.swift */; };
 		2FF7311925EF742000D58844 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311825EF742000D58844 /* AppDelegate.swift */; };
 		2FF7311B25EF742000D58844 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311A25EF742000D58844 /* SceneDelegate.swift */; };
 		2FF7312225EF742000D58844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF7312125EF742000D58844 /* Assets.xcassets */; };
@@ -64,6 +67,7 @@
 		2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPresentationController.swift; sourceTree = "<group>"; };
 		2F363B8825FB57B1003BE50D /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
 		2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSphereCell.swift; sourceTree = "<group>"; };
+		2F8C0686261F02C2008D5895 /* ConfigureLightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureLightCell.swift; sourceTree = "<group>"; };
 		2FF7311525EF742000D58844 /* Raytracer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raytracer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF7311825EF742000D58844 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2FF7311A25EF742000D58844 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */,
+				2F8C0686261F02C2008D5895 /* ConfigureLightCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 				2FF7311925EF742000D58844 /* AppDelegate.swift in Sources */,
 				2FF7311B25EF742000D58844 /* SceneDelegate.swift in Sources */,
 				2F363B8925FB57B1003BE50D /* Configurator.swift in Sources */,
+				2F8C0687261F02C2008D5895 /* ConfigureLightCell.swift in Sources */,
 				2F363B8025FA19A0003BE50D /* MyPresentationController.swift in Sources */,
 				2F8C0678261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */,
 			);
@@ -427,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FF7313025EF742000D58844 /* RaytracerTests.swift in Sources */,
+				2F8C0688261F02C2008D5895 /* ConfigureLightCell.swift in Sources */,
 				2F8C0679261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FF7313B25EF742100D58844 /* RaytracerUITests.swift in Sources */,
+				2F8C0689261F02C2008D5895 /* ConfigureLightCell.swift in Sources */,
 				2F8C067A261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

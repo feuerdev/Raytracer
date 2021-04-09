@@ -41,6 +41,20 @@ extension ConfiguratorDatasource: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section = SceneSections(rawValue: section)
+        switch section {
+        case .spheres:
+            return "Spheres"
+        case .lights:
+            return "Lights"
+        case .settings:
+            return "Settings"
+        case .none:
+            return ""
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -56,7 +70,12 @@ extension ConfiguratorDatasource: UITableViewDataSource {
             cell.setup(with: sphere)
             return cell
         case .lights:
-            return UITableViewCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifierLights, for: indexPath) as! ConfigureLightCell
+            guard let light = scene.lights[safe: indexPath.row] else {
+                return cell
+            }
+            cell.setup(with: light)
+            return cell
         case .settings:
             return UITableViewCell()
         default:
