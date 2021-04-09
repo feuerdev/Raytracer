@@ -79,7 +79,7 @@ extension ConfiguratorDatasource: UITableViewDataSource {
                 return cell
             case .quality:
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierQuality, for: indexPath) as! ConfigureQualityCell
-//                cell.setup(with: scene.quality)
+                cell.setup(with: scene.quality)
                 return cell
             case .reflections:
                 let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierReflections, for: indexPath) as! ConfigureReflectionsCell

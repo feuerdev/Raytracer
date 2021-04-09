@@ -22,8 +22,8 @@ class ConfigureQualityCell: UITableViewCell {
         self.imageView?.layer.borderColor = UIColor.black.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Quality"
-        self.detailTextLabel?.text = "Low:\(quality.low) Medium:\(quality.medium) High:\(quality.high)"
-        self.imageView?.image = UIImage(named: "icon_reflection")
+        self.detailTextLabel?.text = "Low:\(Int(quality.low*100))% Medium:\(Int(quality.medium*100))% High:\(Int(quality.high*100))%"
+        self.imageView?.image = UIImage(named: "icon_percent")
     }
     
 }
