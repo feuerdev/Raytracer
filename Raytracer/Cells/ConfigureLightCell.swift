@@ -11,7 +11,7 @@ import Feuerlib
 class ConfigureLightCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: identifierSpheres)
+        super.init(style: .subtitle, reuseIdentifier: Constants.identifierSpheres)
     }
     
     required init?(coder: NSCoder) {
@@ -28,13 +28,13 @@ class ConfigureLightCell: UITableViewCell {
         var subtitle:String?
         switch light.type {
         case .ambient:
-            img = UIImage(named: "icon-brightness")
+            img = UIImage(named: "icon_brightness")
             subtitle = "Ambient"
         case .directional:
-            img = UIImage(named: "icon-arrow-bottom-left")
+            img = UIImage(named: "icon_arrow_bottom_left")
             subtitle = "Directional"
         case .point:
-            img = UIImage(named: "icon-ceiling-lamp")
+            img = UIImage(named: "icon_ceiling_lamp")
             subtitle = "Point"
         }
         self.imageView?.image = img

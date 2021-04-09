@@ -21,8 +21,12 @@ class Configurator:UIViewController {
         tv.delegate = dataSource
         tv.dataSource = dataSource
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.register(ConfigureSphereCell.self, forCellReuseIdentifier: identifierSpheres)
-        tv.register(ConfigureLightCell.self, forCellReuseIdentifier: identifierLights)
+        tv.register(ConfigureSphereCell.self, forCellReuseIdentifier: Constants.identifierSpheres)
+        tv.register(ConfigureLightCell.self, forCellReuseIdentifier: Constants.identifierLights)
+        tv.register(ConfigureBackgroundCell.self, forCellReuseIdentifier: Constants.identifierBackgroundColor)
+        tv.register(ConfigureReflectionsCell.self, forCellReuseIdentifier: Constants.identifierReflections)
+        tv.register(ConfigureQualityCell.self, forCellReuseIdentifier: Constants.identifierQuality)
+        tv.register(ConfigureShowLightsCell.self, forCellReuseIdentifier: Constants.identifierShowLights)
         return tv
     }()
     

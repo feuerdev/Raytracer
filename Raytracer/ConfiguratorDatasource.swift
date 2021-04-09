@@ -13,7 +13,7 @@ private enum SceneSections:Int {
 }
 
 private enum SceneSettings:Int, CaseIterable {
-    case backgroundcolor, reflections, quality
+    case backgroundcolor, reflections, quality, showLights
 }
 
 class ConfiguratorDatasource: NSObject {
@@ -57,21 +57,41 @@ extension ConfiguratorDatasource: UITableViewDataSource {
         let section = SceneSections(rawValue: indexPath.section)
         switch section {
         case .spheres:
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifierSpheres, for: indexPath) as! ConfigureSphereCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierSpheres, for: indexPath) as! ConfigureSphereCell
             guard let sphere = scene.spheres[safe: indexPath.row] else {
                 return cell
             }
             cell.setup(with: sphere)
             return cell
         case .lights:
-            let cell = tableView.dequeueReusableCell(withIdentifier: identifierLights, for: indexPath) as! ConfigureLightCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierLights, for: indexPath) as! ConfigureLightCell
             guard let light = scene.lights[safe: indexPath.row] else {
                 return cell
             }
             cell.setup(with: light)
             return cell
         case .settings:
-            return UITableViewCell()
+            let setting = SceneSettings.init(rawValue: indexPath.row)
+            switch setting {            
+            case .backgroundcolor:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierBackgroundColor, for: indexPath) as! ConfigureBackgroundCell
+                cell.setup(with: scene.background)
+                return cell
+            case .quality:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierQuality, for: indexPath) as! ConfigureQualityCell
+//                cell.setup(with: scene.quality)
+                return cell
+            case .reflections:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierReflections, for: indexPath) as! ConfigureReflectionsCell
+                cell.setup(with: scene.reflections)
+                return cell
+            case .showLights:
+                let cell = tableView.dequeueReusableCell(withIdentifier: Constants.identifierShowLights, for: indexPath) as! ConfigureShowLightsCell
+                cell.setup(with: scene.showLights)
+                return cell
+            default:
+                return UITableViewCell()
+            }
         default:
             return UITableViewCell()
         }
