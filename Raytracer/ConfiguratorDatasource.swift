@@ -8,12 +8,6 @@
 import UIKit
 import Feuerlib
 
-let identifierSpheres = "spheres"
-let identifierLights = "lights"
-let identifierBackgroundColor = "background"
-let identifierReflections = "reflections"
-let identifierQuality = "quality"
-
 private enum SceneSections:Int {
     case spheres, lights, settings
 }

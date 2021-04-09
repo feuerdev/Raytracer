@@ -11,7 +11,7 @@ import Feuerlib
 class ConfigureSphereCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: identifierSpheres)
+        super.init(style: .subtitle, reuseIdentifier: Constants.identifierSpheres)
     }
     
     required init?(coder: NSCoder) {
@@ -24,9 +24,7 @@ class ConfigureSphereCell: UITableViewCell {
         self.detailTextLabel?.text = "(\(sphere.center.x), \(sphere.center.y), \(sphere.center.z))"
         
         //Color
-        let height = 40
-        let img = sphere.color.toUIColor().image(size: .init(width: height, height: height))
-        self.imageView?.image = sphere.color.toUIColor().image(size: .init(width: height, height: height))
+        self.imageView?.image = sphere.color.toUIColor().image(size: Constants.configurationRowImageSize)
         
         self.imageView?.layer.borderColor = UIColor.black.cgColor
         self.imageView?.layer.borderWidth = 1
