@@ -52,7 +52,11 @@ class Configurator:UIViewController {
         ]
     }()
     
-    private var dataSource = ConfiguratorDatasource()
+    private lazy var dataSource:ConfiguratorDatasource = {
+        let datasource = ConfiguratorDatasource()
+        datasource.delegate = self
+        return datasource
+    }()
     
     override func viewDidLoad() {
         view.addSubview(rvRay)
@@ -98,30 +102,24 @@ class Configurator:UIViewController {
 }
 
 
-//extension ViewController: UIViewControllerTransitioningDelegate {
-//    
-//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-//        return MyPresentationController(presentedViewController: presented, presentingViewController: presenting, height: self.view.frame.height/2)
-//        
-//    }
-//    
-//}
+extension Configurator: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return MyPresentationController(presentedViewController: presented, presentingViewController: presenting, height: self.view.frame.height/2)
+        
+    }
+}
 
-
-
-
-//extension Configurator: UITableViewDelegate {
-//
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let vc = UIViewController()
-//        vc.view.backgroundColor = .systemOrange
-//        vc.modalPresentationStyle = .pageSheet
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//            vc.dismiss(animated: true, completion: nil)
-//        }
-//        present(vc, animated: true, completion: nil)
-//    }
-//}
-
+extension Configurator: ConfigurationDatasourceDelegate {
+    func didSelectSphereConfiguration(with sphere: Sphere) {
+        //
+    }
+    
+    func didSelectLightConfiguration(with light: Light) {
+        //
+    }
+    
+    func didSelectSettingConfiguration(with setting: SceneSettings) {
+        //
+    }
+}

@@ -12,12 +12,19 @@ private enum SceneSections:Int {
     case spheres, lights, settings
 }
 
-private enum SceneSettings:Int, CaseIterable {
+enum SceneSettings:Int, CaseIterable {
     case backgroundcolor, reflections, quality, showLights
+}
+
+protocol ConfigurationDatasourceDelegate {
+    func didSelectSphereConfiguration(with sphere:Sphere)
+    func didSelectLightConfiguration(with light:Light)
+    func didSelectSettingConfiguration(with setting:SceneSettings)
 }
 
 class ConfiguratorDatasource: NSObject {
     var scene: Scene = Scene.testScene
+    var delegate: ConfigurationDatasourceDelegate?
 }
 
 extension ConfiguratorDatasource: UITableViewDataSource {
@@ -105,7 +112,9 @@ extension ConfiguratorDatasource: UITableViewDelegate {
         let section = SceneSections(rawValue: indexPath.section)
         switch section {
         case .spheres:
-            print("a")
+            if let sphere = scene.spheres[safe: indexPath.row] {
+                delegate?.didSelectSphereConfiguration(with: sphere)
+            }
         case .lights:
             print("b")
         case .settings:
