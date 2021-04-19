@@ -78,11 +78,12 @@ class Configurator:UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate { [weak self] context in
             if UIApplication.shared.statusBarOrientation.isLandscape {
+                self?.hideConfigurationSettingsView() //Hide settings on rotation
                 self?.setupLandscapeConstraints()
             } else {
                 self?.setupPortraitConstraints()
             }
-            // 3. If you want the change to be smoothly animated call this block here
+            
             UIView.animate(withDuration: context.transitionDuration) {
                 self?.view.layoutIfNeeded()
             }
