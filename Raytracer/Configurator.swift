@@ -12,6 +12,7 @@ class Configurator:UIViewController {
     
     private lazy var rvRay:UIRaytracerView = {
         let rv = UIRaytracerView()
+        rv.sceneDelegate = dataSource
         rv.translatesAutoresizingMaskIntoConstraints = false
         return rv
     }()
@@ -30,12 +31,31 @@ class Configurator:UIViewController {
         return tv
     }()
     
+    private lazy var cvSettings:ConfiguratorView = {
+        let view = ConfiguratorView()
+        view.uiDelegate = self
+        view.valueDelegate = dataSource
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var conConfigurationTopExtended: NSLayoutConstraint = {
+        let con = cvSettings.topAnchor.constraint(equalTo: rvRay.bottomAnchor)
+        return con
+    }()
+    
+    private lazy var conConfigurationTopHidden: NSLayoutConstraint = {
+        let con = cvSettings.topAnchor.constraint(equalTo: cvSettings.bottomAnchor)
+        return con
+    }()
+    
     private lazy var landscapeConstraints:[NSLayoutConstraint] = {
         return [
             rvRay.topAnchor.constraint(equalTo: view.topAnchor),
             rvRay.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             rvRay.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            rvRay.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            rvRay.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            conConfigurationTopHidden
         ]
     }()
     
@@ -48,7 +68,11 @@ class Configurator:UIViewController {
             tvConfiguration.topAnchor.constraint(equalTo: rvRay.bottomAnchor),
             tvConfiguration.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tvConfiguration.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tvConfiguration.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tvConfiguration.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            cvSettings.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            cvSettings.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            cvSettings.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            conConfigurationTopHidden
         ]
     }()
     
@@ -61,6 +85,7 @@ class Configurator:UIViewController {
     override func viewDidLoad() {
         view.addSubview(rvRay)
         view.addSubview(tvConfiguration)
+        view.addSubview(cvSettings)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -100,27 +125,49 @@ class Configurator:UIViewController {
         NSLayoutConstraint.deactivate(landscapeConstraints)
         NSLayoutConstraint.activate(portraitConstraints)
     }
-}
-
-
-extension Configurator: UIViewControllerTransitioningDelegate {
     
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return MyPresentationController(presentedViewController: presented, presentingViewController: presenting, height: self.view.frame.height/2)
-        
+    private func showConfigurationSettingsView() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.conConfigurationTopHidden.isActive = false
+            self.conConfigurationTopExtended.isActive = true
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    private func hideConfigurationSettingsView() {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.conConfigurationTopExtended.isActive = false
+            self.conConfigurationTopHidden.isActive = true
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }
 
 extension Configurator: ConfigurationDatasourceDelegate {
+    func sceneUpdate() {
+        rvRay.layoutSubviews()
+    }
+    
     func didSelectSphereConfiguration(with sphere: Sphere) {
-        //
+        cvSettings.setup(with: sphere)
+        showConfigurationSettingsView()
     }
     
     func didSelectLightConfiguration(with light: Light) {
-        //
+        cvSettings.setup(with: light)
+        showConfigurationSettingsView()
     }
     
-    func didSelectSettingConfiguration(with setting: SceneSettings) {
-        //
+    func didSelectSettingConfiguration(with scene: Scene, setting: SceneSettings) {
+        cvSettings.setup(with: scene, setting: setting)
+        showConfigurationSettingsView()
+    }
+}
+
+extension Configurator: ConfiguratorViewUiDelegate {
+    func didRequestClose() {
+        hideConfigurationSettingsView()
     }
 }

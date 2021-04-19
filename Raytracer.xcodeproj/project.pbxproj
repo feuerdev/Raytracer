@@ -10,8 +10,16 @@
 		0BE8603C34083D2910DE49D0 /* Pods_Raytracer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EB94C51182567CF45FD6D66 /* Pods_Raytracer.framework */; };
 		1323373C88F7EDFEC728BCCE /* Pods_RaytracerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188D6AB7F7E0BA3A4E3C3103 /* Pods_RaytracerTests.framework */; };
 		2F302536260094DF00522AB5 /* ConfiguratorDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F302535260094DF00522AB5 /* ConfiguratorDatasource.swift */; };
+		2F36354D2622DFC000D60ADC /* ConfiguratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F36354C2622DFC000D60ADC /* ConfiguratorView.swift */; };
+		2F36354E2622DFC000D60ADC /* ConfiguratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F36354C2622DFC000D60ADC /* ConfiguratorView.swift */; };
+		2F36354F2622DFC000D60ADC /* ConfiguratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F36354C2622DFC000D60ADC /* ConfiguratorView.swift */; };
+		2F3635572623140D00D60ADC /* ConfiguratorIntCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3635562623140D00D60ADC /* ConfiguratorIntCell.swift */; };
+		2F3635582623140D00D60ADC /* ConfiguratorIntCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3635562623140D00D60ADC /* ConfiguratorIntCell.swift */; };
+		2F3635592623140D00D60ADC /* ConfiguratorIntCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3635562623140D00D60ADC /* ConfiguratorIntCell.swift */; };
 		2F363B8025FA19A0003BE50D /* MyPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */; };
 		2F363B8925FB57B1003BE50D /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F363B8825FB57B1003BE50D /* Configurator.swift */; };
+		2F490BE3262AF325002E9754 /* ConfiguratorFloatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F490BE2262AF325002E9754 /* ConfiguratorFloatCell.swift */; };
+		2F490BED262AFC99002E9754 /* ConfiguratorSegmentedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F490BEC262AFC99002E9754 /* ConfiguratorSegmentedCell.swift */; };
 		2F8C0678261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */; };
 		2F8C0679261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */; };
 		2F8C067A261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */; };
@@ -33,6 +41,7 @@
 		2F8C06B526202AE9008D5895 /* ConfigureShowLightsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C06B426202AE9008D5895 /* ConfigureShowLightsCell.swift */; };
 		2F8C06B626202AE9008D5895 /* ConfigureShowLightsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C06B426202AE9008D5895 /* ConfigureShowLightsCell.swift */; };
 		2F8C06B726202AE9008D5895 /* ConfigureShowLightsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C06B426202AE9008D5895 /* ConfigureShowLightsCell.swift */; };
+		2FD2A671262C509C00994B11 /* ConfiguratorBoolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD2A670262C509C00994B11 /* ConfiguratorBoolCell.swift */; };
 		2FF7311925EF742000D58844 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311825EF742000D58844 /* AppDelegate.swift */; };
 		2FF7311B25EF742000D58844 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7311A25EF742000D58844 /* SceneDelegate.swift */; };
 		2FF7312225EF742000D58844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF7312125EF742000D58844 /* Assets.xcassets */; };
@@ -79,8 +88,12 @@
 		188D6AB7F7E0BA3A4E3C3103 /* Pods_RaytracerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RaytracerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E672C28920F108E7ED0DD7B /* Pods_Raytracer_RaytracerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Raytracer_RaytracerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F302535260094DF00522AB5 /* ConfiguratorDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorDatasource.swift; sourceTree = "<group>"; };
+		2F36354C2622DFC000D60ADC /* ConfiguratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorView.swift; sourceTree = "<group>"; };
+		2F3635562623140D00D60ADC /* ConfiguratorIntCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorIntCell.swift; sourceTree = "<group>"; };
 		2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPresentationController.swift; sourceTree = "<group>"; };
 		2F363B8825FB57B1003BE50D /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
+		2F490BE2262AF325002E9754 /* ConfiguratorFloatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorFloatCell.swift; sourceTree = "<group>"; };
+		2F490BEC262AFC99002E9754 /* ConfiguratorSegmentedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfiguratorSegmentedCell.swift; sourceTree = "<group>"; };
 		2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureSphereCell.swift; sourceTree = "<group>"; };
 		2F8C0686261F02C2008D5895 /* ConfigureLightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureLightCell.swift; sourceTree = "<group>"; };
 		2F8C069A26202372008D5895 /* ConfigureBackgroundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureBackgroundCell.swift; sourceTree = "<group>"; };
@@ -88,6 +101,7 @@
 		2F8C06A8262028C6008D5895 /* ConfigureReflectionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureReflectionsCell.swift; sourceTree = "<group>"; };
 		2F8C06AE26202AD3008D5895 /* ConfigureQualityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureQualityCell.swift; sourceTree = "<group>"; };
 		2F8C06B426202AE9008D5895 /* ConfigureShowLightsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureShowLightsCell.swift; sourceTree = "<group>"; };
+		2FD2A670262C509C00994B11 /* ConfiguratorBoolCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfiguratorBoolCell.swift; sourceTree = "<group>"; };
 		2FF7311525EF742000D58844 /* Raytracer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raytracer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF7311825EF742000D58844 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2FF7311A25EF742000D58844 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,7 +153,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2F8C0676261EFC50008D5895 /* Cells */ = {
+		2F363554262313D300D60ADC /* Master */ = {
 			isa = PBXGroup;
 			children = (
 				2F8C0677261EFC68008D5895 /* ConfigureSphereCell.swift */,
@@ -148,6 +162,26 @@
 				2F8C06A8262028C6008D5895 /* ConfigureReflectionsCell.swift */,
 				2F8C06AE26202AD3008D5895 /* ConfigureQualityCell.swift */,
 				2F8C06B426202AE9008D5895 /* ConfigureShowLightsCell.swift */,
+			);
+			path = Master;
+			sourceTree = "<group>";
+		};
+		2F363555262313DF00D60ADC /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2F3635562623140D00D60ADC /* ConfiguratorIntCell.swift */,
+				2F490BE2262AF325002E9754 /* ConfiguratorFloatCell.swift */,
+				2F490BEC262AFC99002E9754 /* ConfiguratorSegmentedCell.swift */,
+				2FD2A670262C509C00994B11 /* ConfiguratorBoolCell.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		2F8C0676261EFC50008D5895 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2F363555262313DF00D60ADC /* Detail */,
+				2F363554262313D300D60ADC /* Master */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -193,6 +227,7 @@
 				2F302535260094DF00522AB5 /* ConfiguratorDatasource.swift */,
 				2F363B7F25FA19A0003BE50D /* MyPresentationController.swift */,
 				2F8C06A0262024BF008D5895 /* Constants.swift */,
+				2F36354C2622DFC000D60ADC /* ConfiguratorView.swift */,
 				2F8C0676261EFC50008D5895 /* Cells */,
 				2F8C0681261EFCDD008D5895 /* Resources */,
 			);
@@ -443,6 +478,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F36354D2622DFC000D60ADC /* ConfiguratorView.swift in Sources */,
+				2F490BED262AFC99002E9754 /* ConfiguratorSegmentedCell.swift in Sources */,
 				2F302536260094DF00522AB5 /* ConfiguratorDatasource.swift in Sources */,
 				2FF7311925EF742000D58844 /* AppDelegate.swift in Sources */,
 				2F8C06AF26202AD3008D5895 /* ConfigureQualityCell.swift in Sources */,
@@ -452,9 +489,12 @@
 				2F363B8925FB57B1003BE50D /* Configurator.swift in Sources */,
 				2F8C0687261F02C2008D5895 /* ConfigureLightCell.swift in Sources */,
 				2F8C06B526202AE9008D5895 /* ConfigureShowLightsCell.swift in Sources */,
+				2FD2A671262C509C00994B11 /* ConfiguratorBoolCell.swift in Sources */,
+				2F3635572623140D00D60ADC /* ConfiguratorIntCell.swift in Sources */,
 				2F363B8025FA19A0003BE50D /* MyPresentationController.swift in Sources */,
 				2F8C0678261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */,
 				2F8C06A1262024BF008D5895 /* Constants.swift in Sources */,
+				2F490BE3262AF325002E9754 /* ConfiguratorFloatCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,12 +503,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F8C06B626202AE9008D5895 /* ConfigureShowLightsCell.swift in Sources */,
+				2F36354E2622DFC000D60ADC /* ConfiguratorView.swift in Sources */,
 				2F8C06A2262024BF008D5895 /* Constants.swift in Sources */,
 				2FF7313025EF742000D58844 /* RaytracerTests.swift in Sources */,
 				2F8C0688261F02C2008D5895 /* ConfigureLightCell.swift in Sources */,
 				2F8C06B026202AD3008D5895 /* ConfigureQualityCell.swift in Sources */,
 				2F8C06AA262028C6008D5895 /* ConfigureReflectionsCell.swift in Sources */,
 				2F8C069C26202372008D5895 /* ConfigureBackgroundCell.swift in Sources */,
+				2F3635582623140D00D60ADC /* ConfiguratorIntCell.swift in Sources */,
 				2F8C0679261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,12 +520,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F8C06B726202AE9008D5895 /* ConfigureShowLightsCell.swift in Sources */,
+				2F36354F2622DFC000D60ADC /* ConfiguratorView.swift in Sources */,
 				2F8C06A3262024BF008D5895 /* Constants.swift in Sources */,
 				2FF7313B25EF742100D58844 /* RaytracerUITests.swift in Sources */,
 				2F8C0689261F02C2008D5895 /* ConfigureLightCell.swift in Sources */,
 				2F8C06B126202AD3008D5895 /* ConfigureQualityCell.swift in Sources */,
 				2F8C06AB262028C6008D5895 /* ConfigureReflectionsCell.swift in Sources */,
 				2F8C069D26202372008D5895 /* ConfigureBackgroundCell.swift in Sources */,
+				2F3635592623140D00D60ADC /* ConfiguratorIntCell.swift in Sources */,
 				2F8C067A261EFC68008D5895 /* ConfigureSphereCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -19,7 +19,8 @@ enum SceneSettings:Int, CaseIterable {
 protocol ConfigurationDatasourceDelegate {
     func didSelectSphereConfiguration(with sphere:Sphere)
     func didSelectLightConfiguration(with light:Light)
-    func didSelectSettingConfiguration(with setting:SceneSettings)
+    func didSelectSettingConfiguration(with scene: Scene, setting: SceneSettings)
+    func sceneUpdate()
 }
 
 class ConfiguratorDatasource: NSObject {
@@ -116,12 +117,205 @@ extension ConfiguratorDatasource: UITableViewDelegate {
                 delegate?.didSelectSphereConfiguration(with: sphere)
             }
         case .lights:
-            print("b")
+            if let light = scene.lights[safe: indexPath.row] {
+                delegate?.didSelectLightConfiguration(with: light)
+            }
         case .settings:
-            print("c")
+            if let setting = SceneSettings(rawValue: indexPath.row) {
+                delegate?.didSelectSettingConfiguration(with: scene, setting: setting)
+            }
         default:
-            print("d")
+            break
         }
+    }
+}
+
+extension ConfiguratorDatasource: UIRaytracerSceneDelegate {
+    func getScene() -> Scene {
+        return self.scene
+    }
+    
+    func setScene(_ scene: Scene) {
+        self.scene = scene
+    }
+}
+
+extension ConfiguratorDatasource: ConfiguratorViewValueDelegate {
+    func onReflectionsChanged(value: Int) {
+        scene.reflections = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onQualityLowChanged(value: Int) {
+        scene.quality.low = Float(value)/100.0
+        delegate?.sceneUpdate()
+    }
+    
+    func onQualityMediumChanged(value: Int) {
+        scene.quality.medium = Float(value)/100.0
+        delegate?.sceneUpdate()
+    }
+    
+    func onQualityHighChanged(value: Int) {
+        scene.quality.high = Float(value)/100.0
+        delegate?.sceneUpdate()
+    }
+    
+    func onShowLightsChanged(value: Bool) {
+        scene.showLights = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onBackgroundColorRChanged(value: Int) {
+        scene.background.red = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onBackgroundColorGChanged(value: Int) {
+        scene.background.green = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onBackgroundColorBChanged(value: Int) {
+        scene.background.blue = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onDirectionXChanged(lightId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].direction.x = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onDirectionYChanged(lightId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].direction.y = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onDirectionZChanged(lightId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].direction.z = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onIntensityChanged(lightId: Int, value: Float) {
+        guard let index = (scene.lights.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].intensity = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onLightTypeChanged(lightId: Int, value: Int) {
+        guard let index = (scene.lights.firstIndex { $0.id == lightId }),
+              let type = LightType(rawValue: value) else {
+            return
+        }
+        scene.lights[index].type = type
+        delegate?.sceneUpdate()
+    }
+    
+    func onColorRChanged(sphereId: Int, value: Int) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].color.red = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onColorGChanged(sphereId: Int, value: Int) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].color.green = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onColorBChanged(sphereId: Int, value: Int) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].color.blue = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onPositionXChanged(lightId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].position.x = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onPositionYChanged(lightId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].position.y = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onPositionZChanged(lightId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == lightId }) else {
+            return
+        }
+        scene.lights[index].position.z = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onPositionXChanged(sphereId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].center.x = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onPositionYChanged(sphereId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].center.y = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onPositionZChanged(sphereId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].center.z = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onReflectivityChanged(sphereId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].reflectivity = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onRadiusChanged(sphereId: Int, value: Float) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].radius = value
+        delegate?.sceneUpdate()
+    }
+    
+    func onSpecularChanged(sphereId: Int, value: Int) {
+        guard let index = (scene.spheres.firstIndex { $0.id == sphereId }) else {
+            return
+        }
+        scene.spheres[index].specular = value
+        delegate?.sceneUpdate()
     }
 }
 
