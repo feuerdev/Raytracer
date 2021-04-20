@@ -21,6 +21,7 @@ protocol ConfigurationDatasourceDelegate {
     func didSelectLightConfiguration(with light:Light)
     func didSelectSettingConfiguration(with scene: Scene, setting: SceneSettings)
     func sceneUpdate()
+    func uiUpdate()
 }
 
 class ConfiguratorDatasource: NSObject {
@@ -130,7 +131,7 @@ extension ConfiguratorDatasource: UITableViewDelegate {
     }
 }
 
-extension ConfiguratorDatasource: UIRaytracerSceneDelegate {
+extension ConfiguratorDatasource: UIRaytracerViewSceneDelegate {
     func getScene() -> Scene {
         return self.scene
     }
@@ -169,16 +170,19 @@ extension ConfiguratorDatasource: ConfiguratorViewValueDelegate {
     func onBackgroundColorRChanged(value: Int) {
         scene.background.red = value
         delegate?.sceneUpdate()
+        delegate?.uiUpdate()
     }
     
     func onBackgroundColorGChanged(value: Int) {
         scene.background.green = value
         delegate?.sceneUpdate()
+        delegate?.uiUpdate()
     }
     
     func onBackgroundColorBChanged(value: Int) {
         scene.background.blue = value
         delegate?.sceneUpdate()
+        delegate?.uiUpdate()
     }
     
     func onDirectionXChanged(lightId: Int, value: Float) {
