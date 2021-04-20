@@ -165,6 +165,7 @@ extension Configurator: ConfigurationDatasourceDelegate {
     
     func sceneUpdate() {
         rvRay.layoutSubviews()
+        tvConfiguration.reloadData()
     }
     
     func didSelectSphereConfiguration(with sphere: Sphere) {
