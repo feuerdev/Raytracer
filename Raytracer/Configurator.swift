@@ -149,10 +149,20 @@ class Configurator:UIViewController {
         })
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if dataSource.getScene().background.luma > 100 {
+            return .darkContent
+        } else {
+            return .lightContent
+        }
     }
 }
 
 extension Configurator: ConfigurationDatasourceDelegate {
+    func uiUpdate() {
+        setNeedsStatusBarAppearanceUpdate() //To update status bar color in light or dark scenes
+    }
+    
     func sceneUpdate() {
         rvRay.layoutSubviews()
     }
