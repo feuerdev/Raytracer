@@ -13,6 +13,7 @@ class Configurator:UIViewController {
     private lazy var rvRay:UIRaytracerView = {
         let rv = UIRaytracerView()
         rv.sceneDelegate = dataSource
+        rv.interactionDelegate = self
         rv.translatesAutoresizingMaskIntoConstraints = false
         return rv
     }()
@@ -169,5 +170,12 @@ extension Configurator: ConfigurationDatasourceDelegate {
 extension Configurator: ConfiguratorViewUiDelegate {
     func didRequestClose() {
         hideConfigurationSettingsView()
+    }
+}
+
+extension Configurator: UIRaytracerViewInteractionDelegate {
+    func didTapSphere(_ sphere: Sphere) {
+        cvSettings.setup(with: sphere)
+        showConfigurationSettingsView()
     }
 }
