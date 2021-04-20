@@ -26,7 +26,7 @@ class ConfigureSphereCell: UITableViewCell {
         //Color
         self.imageView?.image = sphere.color.toUIColor().image(size: Constants.configurationRowImageSize)
         
-        self.imageView?.layer.borderColor = UIColor.black.cgColor
+        self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
     }
 }

@@ -19,11 +19,12 @@ class ConfigureShowLightsCell: UITableViewCell {
     }
     
     func setup(with show:Bool) {
-        self.imageView?.layer.borderColor = UIColor.black.cgColor
+        self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Show Lights"
         self.detailTextLabel?.text = show ? "Yes" : "No"
-        self.imageView?.image = UIImage(named: "icon_ceiling_lamp")
+        self.imageView?.image = UIImage(named: "icon_ceiling_lamp")?.withRenderingMode(.alwaysTemplate)
+        self.imageView?.tintColor = UIColor(named: "border")
     }
     
 }

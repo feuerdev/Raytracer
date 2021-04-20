@@ -19,7 +19,7 @@ class ConfigureBackgroundCell: UITableViewCell {
     }
     
     func setup(with color:RGBColor) {
-        self.imageView?.layer.borderColor = UIColor.black.cgColor
+        self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Background Color"
         self.detailTextLabel?.text = "(R:\(color.red) G:\(color.green) B:\(color.blue))"        

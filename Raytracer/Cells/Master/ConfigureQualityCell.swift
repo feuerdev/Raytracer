@@ -19,11 +19,12 @@ class ConfigureQualityCell: UITableViewCell {
     }
     
     func setup(with quality:RenderQuality) {
-        self.imageView?.layer.borderColor = UIColor.black.cgColor
+        self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Quality"
         self.detailTextLabel?.text = "Low:\(Int(quality.low*100))% Medium:\(Int(quality.medium*100))% High:\(Int(quality.high*100))%"
-        self.imageView?.image = UIImage(named: "icon_percent")
+        self.imageView?.image = UIImage(named: "icon_percent")?.withRenderingMode(.alwaysTemplate)
+        self.imageView?.tintColor = UIColor(named: "border")
     }
     
 }

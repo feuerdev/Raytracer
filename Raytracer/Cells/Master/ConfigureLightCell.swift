@@ -19,7 +19,7 @@ class ConfigureLightCell: UITableViewCell {
     }
     
     func setup(with light:Light) {
-        self.imageView?.layer.borderColor = UIColor.black.cgColor
+        self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = light.name
         
@@ -28,16 +28,17 @@ class ConfigureLightCell: UITableViewCell {
         var subtitle:String?
         switch light.type {
         case .ambient:
-            img = UIImage(named: "icon_brightness")
+            img = UIImage(named: "icon_brightness")?.withRenderingMode(.alwaysTemplate)
             subtitle = "Ambient"
         case .directional:
-            img = UIImage(named: "icon_arrow_bottom_left")
+            img = UIImage(named: "icon_arrow_bottom_left")?.withRenderingMode(.alwaysTemplate)
             subtitle = "Directional"
         case .point:
-            img = UIImage(named: "icon_ceiling_lamp")
+            img = UIImage(named: "icon_ceiling_lamp")?.withRenderingMode(.alwaysTemplate)
             subtitle = "Point"
         }
         self.imageView?.image = img
+        self.imageView?.tintColor = UIColor(named: "border")
         self.detailTextLabel?.text = subtitle
     }
 }

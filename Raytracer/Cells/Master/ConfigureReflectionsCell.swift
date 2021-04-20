@@ -19,11 +19,12 @@ class ConfigureReflectionsCell: UITableViewCell {
     }
     
     func setup(with reflections:Int) {
-        self.imageView?.layer.borderColor = UIColor.black.cgColor
+        self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Reflections"
         self.detailTextLabel?.text = String(reflections)
-        self.imageView?.image = UIImage(named: "icon_reflection")
+        self.imageView?.image = UIImage(named: "icon_reflection")?.withRenderingMode(.alwaysTemplate)
+        self.imageView?.tintColor = UIColor(named: "border")
     }
     
 }
