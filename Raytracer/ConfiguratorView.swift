@@ -181,9 +181,9 @@ class ConfiguratorView: UIView {
         case .quality:
             self.lblName.text = "Quality"
             self.elements = [
-                ConfiguratorIntCell(title: "Low", min: 1, max: 33, value: scene.reflections) { [weak self] value in self?.valueDelegate?.onQualityLowChanged(value: value) },
-                ConfiguratorIntCell(title: "Medium", min: 34, max: 66, value: scene.reflections) { [weak self] value in self?.valueDelegate?.onQualityMediumChanged(value: value) },
-                ConfiguratorIntCell(title: "High", min: 67, max: 100, value: scene.reflections) { [weak self] value in self?.valueDelegate?.onQualityHighChanged(value: value) }
+                ConfiguratorIntCell(title: "Low", min: 1, max: 100, value: Int(scene.quality.low*100), unit: "%") { [weak self] value in self?.valueDelegate?.onQualityLowChanged(value: value) },
+                ConfiguratorIntCell(title: "Medium", min: 1, max: 100, value: Int(scene.quality.medium*100), unit: "%") { [weak self] value in self?.valueDelegate?.onQualityMediumChanged(value: value) },
+                ConfiguratorIntCell(title: "High", min: 1, max: 500, value: Int(scene.quality.high*100), unit: "%") { [weak self] value in self?.valueDelegate?.onQualityHighChanged(value: value) }
             ]
         case .showLights:
             self.lblName.text = "Show lights in scene"
