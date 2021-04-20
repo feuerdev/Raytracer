@@ -29,6 +29,7 @@ class ConfiguratorFloatCell: UITableViewCell {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .right
+        lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     
@@ -64,7 +65,7 @@ class ConfiguratorFloatCell: UITableViewCell {
             slValue.leadingAnchor.constraint(equalTo: lblTitle.trailingAnchor, constant: 15),
             lblValue.leadingAnchor.constraint(equalTo: slValue.trailingAnchor, constant: 15),
             contentView.trailingAnchor.constraint(equalTo: lblValue.trailingAnchor, constant: 20),
-            lblValue.widthAnchor.constraint(equalToConstant: 45)
+            lblValue.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
     

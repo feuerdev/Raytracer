@@ -11,6 +11,8 @@ class ConfiguratorIntCell: UITableViewCell {
     
     private var oldValue: Int = -1
     
+    private var unit: String = ""
+    
     private var valueChangedHandler: ((_ value:Int)->Void)? = nil
     
     private lazy var lblTitle:UILabel = {
@@ -31,6 +33,7 @@ class ConfiguratorIntCell: UITableViewCell {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .right
+        lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     
@@ -42,14 +45,15 @@ class ConfiguratorIntCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    convenience init(title:String, min:Int, max:Int, value:Int, valueChangedHandler: @escaping (_ value:Int)->Void) {
+    convenience init(title:String, min:Int, max:Int, value:Int, unit:String = "", valueChangedHandler: @escaping (_ value:Int)->Void) {
         self.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: nil)
         self.slValue.minimumValue = Float(min)
         self.slValue.maximumValue = Float(max)
         self.slValue.value = Float(value)
-        self.lblValue.text = String(value)
+        self.lblValue.text = String(value)+unit
         self.lblTitle.text = title
         self.valueChangedHandler = valueChangedHandler
+        self.unit = unit
         
         contentView.addSubview(slValue)
         contentView.addSubview(lblTitle)
@@ -66,7 +70,7 @@ class ConfiguratorIntCell: UITableViewCell {
             slValue.leadingAnchor.constraint(equalTo: lblTitle.trailingAnchor, constant: 15),
             lblValue.leadingAnchor.constraint(equalTo: slValue.trailingAnchor, constant: 15),
             contentView.trailingAnchor.constraint(equalTo: lblValue.trailingAnchor, constant: 20),
-            lblValue.widthAnchor.constraint(equalToConstant: 45)
+            lblValue.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -75,7 +79,7 @@ class ConfiguratorIntCell: UITableViewCell {
         slider.value = rounded
         
         if oldValue != Int(rounded) {
-            self.lblValue.text = String(Int(rounded))
+            self.lblValue.text = String(Int(rounded))+unit
             valueChangedHandler?(Int(rounded))
         }
         
