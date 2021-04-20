@@ -66,7 +66,7 @@ class ConfiguratorView: UIView {
         tv.dataSource = self
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.tableFooterView = UIView(frame: .null) //Hide extra dividers
-        tv.backgroundColor = .white
+        tv.backgroundColor = .systemBackground
         return tv
     }()
     
