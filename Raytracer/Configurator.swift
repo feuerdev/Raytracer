@@ -36,6 +36,7 @@ class Configurator:UIViewController {
         let view = ConfiguratorView()
         view.uiDelegate = self
         view.valueDelegate = dataSource
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -129,6 +130,7 @@ class Configurator:UIViewController {
     
     private func showConfigurationSettingsView() {
         self.view.layoutIfNeeded()
+        self.cvSettings.isHidden = false
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
             self.conConfigurationTopHidden.isActive = false
             self.conConfigurationTopExtended.isActive = true
@@ -142,7 +144,11 @@ class Configurator:UIViewController {
             self.conConfigurationTopExtended.isActive = false
             self.conConfigurationTopHidden.isActive = true
             self.view.layoutIfNeeded()
-        }, completion: nil)
+        }, completion: {_ in
+            self.cvSettings.isHidden = true
+        })
+    }
+    
     }
 }
 
