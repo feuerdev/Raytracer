@@ -54,8 +54,8 @@ class Configurator:UIViewController {
     private lazy var landscapeConstraints:[NSLayoutConstraint] = {
         return [
             rvRay.topAnchor.constraint(equalTo: view.topAnchor),
-            rvRay.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            rvRay.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            rvRay.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            rvRay.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             rvRay.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             conConfigurationTopHidden
         ]
