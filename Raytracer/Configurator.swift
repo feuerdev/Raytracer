@@ -129,6 +129,11 @@ class Configurator:UIViewController {
     }
     
     private func showConfigurationSettingsView() {
+        //Only show settings in Portrait mode
+        guard let orientation = self.view.window?.windowScene?.interfaceOrientation,
+            orientation.isPortrait else {
+            return
+        }
         self.view.layoutIfNeeded()
         self.cvSettings.isHidden = false
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
