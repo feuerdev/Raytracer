@@ -196,8 +196,12 @@ extension Configurator: ConfiguratorViewUiDelegate {
 }
 
 extension Configurator: UIRaytracerViewInteractionDelegate {
-    func didTapSphere(_ sphere: Sphere) {
-        cvSettings.setup(with: sphere)
-        showConfigurationSettingsView()
+    func didTapSphere(_ sphere: Sphere?) {
+        if let sphere = sphere {
+            cvSettings.setup(with: sphere)
+            showConfigurationSettingsView()
+        } else {
+            hideConfigurationSettingsView()
+        }
     }
 }
