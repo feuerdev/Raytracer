@@ -22,6 +22,8 @@ protocol ConfigurationDatasourceDelegate {
     func didSelectSettingConfiguration(with scene: Scene, setting: SceneSettings)
     func sceneUpdate()
     func uiUpdate()
+    func scrolledDown()
+    func scrolledUp()
 }
 
 class ConfiguratorDatasource: NSObject {
@@ -153,6 +155,14 @@ extension ConfiguratorDatasource: UITableViewDelegate {
             }
         default:
             break
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 40) {
+            delegate?.scrolledDown()
+        } else {
+            delegate?.scrolledUp()
         }
     }
 }

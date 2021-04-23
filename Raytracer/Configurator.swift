@@ -41,6 +41,35 @@ class Configurator:UIViewController {
         return view
     }()
     
+    private lazy var btnAdd:UIButton = {
+        let btn = UIButton(primaryAction: .init(handler: { _ in
+            let ac = UIAlertController(title: "Add", message: "Select type of object to add to the scene", preferredStyle: .actionSheet)
+            ac.addAction(.init(title: "Sphere", style: .default, handler: { _ in
+                print("sphere")
+                self.dataSource.scene.spheres.append(Sphere.createRandom())
+                self.sceneUpdate()
+            }))
+            ac.addAction(.init(title: "Light", style: .default, handler: { _ in
+                let light = Light(type: .ambient, intensity: 0.2)
+                self.dataSource.scene.lights.append(light)
+                self.sceneUpdate()
+            }))
+            ac.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            self.present(ac, animated: true, completion: nil)
+        }))
+        btn.backgroundColor = .systemGray2
+        btn.tintColor = .white
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "icon_add"), for: .normal)
+        btn.layer.cornerRadius = 35
+        btn.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        btn.layer.shadowOffset = CGSize(width: 10, height: 10)
+        btn.layer.shadowOpacity = 1.0
+        btn.layer.shadowRadius = 5
+        btn.layer.masksToBounds = false
+        return btn
+    }()
+    
     private lazy var conConfigurationTopExtended: NSLayoutConstraint = {
         let con = cvSettings.topAnchor.constraint(equalTo: rvRay.bottomAnchor)
         return con
@@ -74,7 +103,11 @@ class Configurator:UIViewController {
             cvSettings.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             cvSettings.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             cvSettings.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            conConfigurationTopHidden
+            conConfigurationTopHidden,
+            view.trailingAnchor.constraint(equalTo: btnAdd.trailingAnchor, constant: 40),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: btnAdd.bottomAnchor, constant: 40),
+            btnAdd.widthAnchor.constraint(equalToConstant: 70),
+            btnAdd.heightAnchor.constraint(equalToConstant: 70)
         ]
     }()
     
@@ -88,6 +121,7 @@ class Configurator:UIViewController {
         view.addSubview(rvRay)
         view.addSubview(tvConfiguration)
         view.addSubview(cvSettings)
+        view.addSubview(btnAdd)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -119,11 +153,13 @@ class Configurator:UIViewController {
     }
     
     private func setupLandscapeConstraints() {
+        btnAdd.isHidden = true
         NSLayoutConstraint.deactivate(portraitConstraints)
         NSLayoutConstraint.activate(landscapeConstraints)
     }
     
     private func setupPortraitConstraints() {
+        btnAdd.isHidden = false
         NSLayoutConstraint.deactivate(landscapeConstraints)
         NSLayoutConstraint.activate(portraitConstraints)
     }
@@ -136,6 +172,7 @@ class Configurator:UIViewController {
         }
         self.view.layoutIfNeeded()
         self.cvSettings.isHidden = false
+        hideAddButton()
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
             self.conConfigurationTopHidden.isActive = false
             self.conConfigurationTopExtended.isActive = true
@@ -145,6 +182,7 @@ class Configurator:UIViewController {
     
     private func hideConfigurationSettingsView() {
         self.view.layoutIfNeeded()
+        showAddButton()
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
             self.conConfigurationTopExtended.isActive = false
             self.conConfigurationTopHidden.isActive = true
@@ -152,6 +190,22 @@ class Configurator:UIViewController {
         }, completion: {_ in
             self.cvSettings.isHidden = true
         })
+    }
+    
+    private func showAddButton() {
+        btnAdd.alpha = 0
+        btnAdd.isHidden = false
+        UIView.animate(withDuration: 0.45, delay: 0, options: .curveEaseInOut) {
+            self.btnAdd.alpha = 1
+        }
+    }
+    
+    private func hideAddButton() {
+        UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseInOut, animations: {
+            self.btnAdd.alpha = 0
+        }) { (finished) in
+            self.btnAdd.isHidden = finished
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -164,6 +218,16 @@ class Configurator:UIViewController {
 }
 
 extension Configurator: ConfigurationDatasourceDelegate {
+    func scrolledDown() {
+        hideAddButton()
+    }
+    
+    func scrolledUp() {
+        if btnAdd.isHidden {
+            showAddButton()
+        }        
+    }
+    
     func uiUpdate() {
         setNeedsStatusBarAppearanceUpdate() //To update status bar color in light or dark scenes
     }
