@@ -22,7 +22,7 @@ class ConfigureSphereCell: UITableViewCell {
         self.accessoryType = .disclosureIndicator
         //Labels
         self.textLabel?.text = sphere.name
-        self.detailTextLabel?.text = "(\(sphere.center.x), \(sphere.center.y), \(sphere.center.z))"
+        self.detailTextLabel?.text = "(\(String(format: "%.1f", sphere.center.x))), (\(String(format: "%.1f", sphere.center.y))), (\(String(format: "%.1f", sphere.center.z)))"
         
         //Color
         self.imageView?.image = sphere.color.toUIColor().image(size: Constants.configurationRowImageSize)
