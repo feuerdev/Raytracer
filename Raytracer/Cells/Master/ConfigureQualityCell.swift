@@ -19,6 +19,7 @@ class ConfigureQualityCell: UITableViewCell {
     }
     
     func setup(with quality:RenderQuality) {
+        self.accessoryType = .disclosureIndicator
         self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Quality"

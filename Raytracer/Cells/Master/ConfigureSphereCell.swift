@@ -19,6 +19,7 @@ class ConfigureSphereCell: UITableViewCell {
     }
     
     func setup(with sphere:Sphere) {
+        self.accessoryType = .disclosureIndicator
         //Labels
         self.textLabel?.text = sphere.name
         self.detailTextLabel?.text = "(\(sphere.center.x), \(sphere.center.y), \(sphere.center.z))"

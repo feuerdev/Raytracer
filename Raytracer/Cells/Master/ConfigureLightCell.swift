@@ -19,6 +19,7 @@ class ConfigureLightCell: UITableViewCell {
     }
     
     func setup(with light:Light) {
+        self.accessoryType = .disclosureIndicator
         self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = light.name

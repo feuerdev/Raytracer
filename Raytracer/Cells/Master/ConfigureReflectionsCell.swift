@@ -19,6 +19,7 @@ class ConfigureReflectionsCell: UITableViewCell {
     }
     
     func setup(with reflections:Int) {
+        self.accessoryType = .disclosureIndicator
         self.imageView?.layer.borderColor = UIColor(named: "border")?.cgColor
         self.imageView?.layer.borderWidth = 1
         self.textLabel?.text = "Reflections"
