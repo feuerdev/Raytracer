@@ -44,6 +44,32 @@ extension ConfiguratorDatasource: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            switch indexPath.section {
+            case 0:
+                scene.spheres.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                delegate?.sceneUpdate()
+            case 1:
+                scene.lights.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                delegate?.sceneUpdate()
+            default:
+                return
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        switch indexPath.section {
+        case 0,1:
+            return true
+        default:
+            return false
+        }
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let section = SceneSections(rawValue: section)
         switch section {
