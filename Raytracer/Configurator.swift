@@ -55,6 +55,7 @@ class Configurator:UIViewController {
                 self.sceneUpdate()
             }))
             ac.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            ac.popoverPresentationController?.sourceView = self.btnAdd
             self.present(ac, animated: true, completion: nil)
         }))
         btn.backgroundColor = .systemGray2
@@ -140,6 +141,7 @@ class Configurator:UIViewController {
         coordinator.animate { [weak self] context in
             if UIApplication.shared.statusBarOrientation.isLandscape {
                 self?.hideConfigurationSettingsView() //Hide settings on rotation
+                self?.hideAddButton()
                 self?.setupLandscapeConstraints()
             } else {
                 self?.setupPortraitConstraints()

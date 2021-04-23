@@ -159,7 +159,7 @@ extension ConfiguratorDatasource: UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 40) {
+        if (scrollView.contentOffset.y > 0 && scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 40) {
             delegate?.scrolledDown()
         } else {
             delegate?.scrolledUp()
