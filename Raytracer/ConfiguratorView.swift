@@ -94,12 +94,14 @@ class ConfiguratorView: UIView {
     }
     
     private func setupConstraints() {
+        let topHeight = vTopBar.heightAnchor.constraint(equalToConstant: 44)
+        topHeight.priority = UILayoutPriority(rawValue: 999)
         NSLayoutConstraint.activate([
             
             vTopBar.topAnchor.constraint(equalTo: self.topAnchor),
             vTopBar.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             vTopBar.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            vTopBar.heightAnchor.constraint(equalToConstant: 44),
+            topHeight,
             
             lblName.leadingAnchor.constraint(equalTo: vTopBar.leadingAnchor, constant: 20),
             btnClose.centerYAnchor.constraint(equalTo: vTopBar.centerYAnchor),
